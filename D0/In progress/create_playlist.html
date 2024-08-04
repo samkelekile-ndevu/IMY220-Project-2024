@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Playlist - Music App</title>
+    <style>
+        /* General styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+
+        header {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            text-align: center;
+        }
+
+        header nav {
+            display: flex;
+            justify-content: center;
+        }
+
+        header nav a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 1.1em;
+            transition: color 0.3s;
+        }
+
+        header nav a:hover {
+            color: #ffdd57;
+        }
+
+        main {
+            flex: 1;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .create-playlist-form {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            width: 400px;
+        }
+
+        .create-playlist-form h2 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 1.1em;
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            font-size: 1em;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff;
+            color: #333;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-group .upload-cover {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .form-group .upload-cover label {
+            margin-left: 10px;
+            cursor: pointer;
+        }
+
+        .form-group .upload-cover input[type="file"] {
+            display: none;
+        }
+
+        .form-group button {
+            background: #ffdd57;
+            border: none;
+            color: #333;
+            padding: 10px 20px;
+            font-size: 1em;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+
+        .form-group button:hover {
+            background: #f9d846;
+        }
+
+        footer {
+            background: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            padding: 15px 0;
+            text-align: center;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="#">Home</a>
+            <a href="#">Explore</a>
+            <a href="#">Profile</a>
+            <a href="#">Logout</a>
+        </nav>
+    </header>
+    
+    <main>
+        <form class="create-playlist-form" enctype="multipart/form-data">
+            <h2>Create New Playlist</h2>
+            <div class="form-group upload-cover">
+                <label for="playlist-cover-upload">Upload Playlist Cover Image:</label>
+                <input type="file" id="playlist-cover-upload" name="playlist-cover" accept="image/*">
+            </div>
+            <div class="form-group">
+                <label for="playlist-name">Playlist Name</label>
+                <input type="text" id="playlist-name" name="playlist-name" required>
+            </div>
+            <div class="form-group">
+                <label for="playlist-description">Description</label>
+                <textarea id="playlist-description" name="playlist-description" placeholder="Describe your playlist..."></textarea>
+            </div>
+            <div class="form-group">
+                <button type="submit">Create Playlist</button>
+            </div>
+        </form>
+    </main>
+    
+    <footer>
+        <p>&copy; 2024 Music App. All rights reserved.</p>
+    </footer>
+</body>
+</html>

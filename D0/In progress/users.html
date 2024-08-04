@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Friends Page - Music App</title>
+    <style>
+        /* General styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+
+        header {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            text-align: center;
+        }
+
+        header nav {
+            display: flex;
+            justify-content: center;
+        }
+
+        header nav a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 1.1em;
+            transition: color 0.3s;
+        }
+
+        header nav a:hover {
+            color: #ffdd57;
+        }
+
+        main {
+            flex: 1;
+            padding: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .user-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            width: 300px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+
+        .user-card img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 10px;
+        }
+
+        .user-card h2 {
+            margin: 10px 0;
+            font-size: 1.5em;
+        }
+
+        .user-card p {
+            margin: 5px 0;
+            font-size: 1.1em;
+        }
+
+        .friend-request-btn {
+            background: #ffdd57;
+            border: none;
+            color: #333;
+            padding: 10px 20px;
+            font-size: 1em;
+            border-radius: 20px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .friend-request-btn:hover {
+            background: #f9d846;
+        }
+
+        footer {
+            background: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            padding: 15px 0;
+            text-align: center;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="#">Home</a>
+            <a href="#">Explore</a>
+            <a href="#">Profile</a>
+            <a href="#">Logout</a>
+        </nav>
+    </header>
+    
+    <main>
+        <!-- User card example, repeat this structure for each user -->
+        <div class="user-card">
+            <img src="https://via.placeholder.com/150" alt="Profile Image">
+            <h2>User 1</h2>
+            <p>Username: user1</p>
+            <p>Pronouns: He/Him</p>
+            <button class="friend-request-btn">Send Friend Request</button>
+        </div>
+
+        <div class="user-card">
+            <img src="https://via.placeholder.com/150" alt="Profile Image">
+            <h2>User 2</h2>
+            <p>Username: user2</p>
+            <p>Pronouns: She/Her</p>
+            <button class="friend-request-btn">Send Friend Request</button>
+        </div>
+
+        <!-- Repeat the above structure for each user (up to 20) -->
+
+    </main>
+    
+    <footer>
+        <p>&copy; 2024 Music App. All rights reserved.</p>
+    </footer>
+</body>
+</html>

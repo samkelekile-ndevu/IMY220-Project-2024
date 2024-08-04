@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Playlist Share</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            color: #fff;
+        }
+        header {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 15px 0;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+        header img {
+            width: 100px; /* Adjust the width as needed */
+            height: auto;
+            margin-bottom: 10px;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+            font-weight: bold;
+        }
+        nav {
+            text-align: center;
+            margin-top: 10px;
+        }
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 1.1em;
+            transition: color 0.3s, border-bottom 0.3s;
+            border-bottom: 2px solid transparent;
+        }
+        nav a:hover {
+            color: #ffdd57;
+            border-bottom: 2px solid #ffdd57;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 20px;
+            position: relative;
+            min-height: 80vh; /* Ensure there's enough space for footer and content */
+        }
+        .tabs {
+            display: flex;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 10px;
+            border-radius: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            margin-bottom: 20px;
+        }
+        .tabs button {
+            background: none;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+            color: #fff;
+            border-radius: 20px;
+            margin: 0 10px;
+            transition: background 0.3s, color 0.3s, border-color 0.3s;
+            border: 2px solid transparent;
+        }
+        .tabs button.active {
+            background-color: #ffdd57;
+            color: #333;
+            border-color: #ffdd57;
+        }
+        .carousel {
+            display: flex;
+            overflow: hidden;
+            position: relative;
+        }
+        .carousel-inner {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+        .carousel-item {
+            min-width: 250px;
+            margin-right: 20px;
+            background: #fff;
+            color: #333;
+            border-radius: 12px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        .carousel-item img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        .carousel-item .details {
+            padding: 15px;
+        }
+        .carousel-item h3 {
+            margin: 0;
+            font-size: 1.2em;
+        }
+        .carousel-item p {
+            margin: 5px 0;
+            color: #666;
+        }
+        .carousel-item .spotify-embed {
+            padding: 15px;
+        }
+        .carousel-controls {
+            display: flex;
+            justify-content: space-between;
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            transform: translateY(-50%);
+            padding: 0 10px;
+            box-sizing: border-box;
+        }
+        .carousel-controls button {
+            background: rgba(0, 0, 0, 0.6);
+            border: none;
+            color: #fff;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 1.2em;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .playlist-feed {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .playlist-feed-item {
+            background: #fff;
+            color: #333;
+            border-radius: 12px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+        }
+        .playlist-feed-item img {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        .playlist-feed-item .details {
+            flex: 1;
+        }
+        .playlist-feed-item h3 {
+            margin: 0 0 10px;
+            font-size: 1.3em;
+        }
+        .playlist-feed-item p {
+            margin: 5px 0;
+            color: #666;
+        }
+        .playlist-feed-item .date {
+            font-size: 0.9em;
+            color: #999;
+        }
+        footer {
+            background: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            padding: 15px 0;
+            text-align: center;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="https://via.placeholder.com/100x100?text=Logo" alt="Logo">
+        <h1>Play Melodia</h1>
+        <nav>
+            <a href="#">Home</a>
+            <a href="#">Connect with others</a>
+            <a href="#">Profile</a>
+        </nav>
+    </header>
+    <div class="container">
+        <div class="tabs">
+            <button id="song-feed-btn" class="active">Song Feed</button>
+            <button id="playlist-feed-btn">Playlist Feed</button>
+        </div>
+
+        <div id="song-feed" class="carousel">
+            <div class="carousel-inner">
+                <!-- Song Feed Items -->
+                <div class="carousel-item song-card">
+                    <img src="https://via.placeholder.com/600x180?text=Track+1" alt="Track 1">
+                    <div class="details">
+                        <h3>Track 1</h3>
+                        <p><strong>Artist:</strong> Artist 1</p>
+                        <p class="date"><strong>Added on:</strong> August 1, 2024</p>
+                    </div>
+                    <div class="spotify-embed">
+                        <iframe src="https://open.spotify.com/embed/track/4PTG3Z6ehGkBFwjybzWkR8" height="80" allowtransparency="true" allow="encrypted-media"></iframe>
+                    </div>
+                </div>
+                
+                <div class="carousel-item song-card">
+                    <img src="https://via.placeholder.com/600x180?text=Track+2" alt="Track 2">
+                    <div class="details">
+                        <h3>Track 2</h3>
+                        <p><strong>Artist:</strong> Artist 2</p>
+                        <p class="date"><strong>Added on:</strong> July 30, 2024</p>
+                    </div>
+                    <div class="spotify-embed">
+                        <iframe src="https://open.spotify.com/embed/track/4PTG3Z6ehGkBFwjybzWkR8" height="80" allowtransparency="true" allow="encrypted-media"></iframe>
+                    </div>
+                </div>
+                
+                <!-- Additional song items... -->
+            </div>
+            <div class="carousel-controls">
+                <button class="prev">&#9664;</button>
+                <button class="next">&#9654;</button>
+            </div>
+        </div>
+
+        <div id="playlist-feed" class="playlist-feed" style="display: none;">
+            <!-- Playlist Feed Items -->
+            <div class="playlist-feed-item">
+                <img src="https://via.placeholder.com/120?text=Playlist+1" alt="Playlist 1">
+                <div class="details">
+                    <h3>User 1 created a new playlist</h3>
+                    <p><strong>Playlist:</strong> Chill Vibes</p>
+                    <p class="date">August 2, 2024</p>
+                </div>
+            </div>
+
+            <div class="playlist-feed-item">
+                <img src="https://via.placeholder.com/120?text=Playlist+2" alt="Playlist 2">
+                <div class="details">
+                    <h3>User 2 saved a playlist</h3>
+                    <p><strong>Playlist:</strong> Workout Hits</p>
+                    <p class="date">August 1, 2024</p>
+                </div>
+            </div>
+            
+            <!-- Additional playlist items... -->
+        </div>
+    </div>
+    <footer>
+        <p>&copy; 2024 Play Melodia. All rights reserved.</p>
+    </footer>
+    <script>
+        const songFeedBtn = document.getElementById('song-feed-btn');
+        const playlistFeedBtn = document.getElementById('playlist-feed-btn');
+        const songFeed = document.getElementById('song-feed');
+        const playlistFeed = document.getElementById('playlist-feed');
+
+        songFeedBtn.addEventListener('click', () => {
+            songFeed.style.display = 'flex';
+            playlistFeed.style.display = 'none';
+            songFeedBtn.classList.add('active');
+            playlistFeedBtn.classList.remove('active');
+        });
+
+        playlistFeedBtn.addEventListener('click', () => {
+            playlistFeed.style.display = 'flex';
+            songFeed.style.display = 'none';
+            playlistFeedBtn.classList.add('active');
+            songFeedBtn.classList.remove('active');
+        });
+
+        // Carousel functionality for song feed
+        let currentIndex = 0;
+        const carouselInner = document.querySelector('.carousel-inner');
+        const carouselItems = document.querySelectorAll('.carousel-item');
+        const totalItems = carouselItems.length;
+
+        function showItem(index) {
+            carouselInner.style.transform = `translateX(-${index * 270}px)`;
+        }
+
+        document.querySelector('.carousel-controls .next').addEventListener('click', () => {
+            currentIndex = (currentIndex + 1) % totalItems;
+            showItem(currentIndex);
+        });
+
+        document.querySelector('.carousel-controls .prev').addEventListener('click', () => {
+            currentIndex = (currentIndex - 1 + totalItems) % totalItems;
+            showItem(currentIndex);
+        });
+    </script>
+</body>
+</html>

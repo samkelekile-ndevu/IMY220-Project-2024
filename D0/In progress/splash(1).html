@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Play Melodia - Splash Page</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            color: #fff;
+            overflow: hidden;
+            background: #000; /* Fallback color */
+        }
+        .splash-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background: url('Gemini_Generated_Image_g9vpaog9vpaog9vp.jfif') no-repeat center center/cover;
+            text-align: center;
+            position: relative;
+        }
+        .logo {
+            font-size: 3em;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #fff;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+        }
+        .tagline {
+            font-size: 2em;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+        .description {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+            max-width: 600px;
+            color: #fff;
+        }
+        .form-container {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+            margin-top: 20px;
+        }
+        .form-container input {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 5px;
+        }
+        .form-container button {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: bold;
+            color: #fff;
+            background: #1db954;
+            transition: background 0.3s ease;
+        }
+        .form-container button:hover {
+            background: #1ed760;
+        }
+        .form-links {
+            margin-top: 15px;
+            font-size: 0.9em;
+        }
+        .form-links a {
+            color: #1db954;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+        .form-links a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="splash-container">
+        <div class="logo">
+            <img src="" alt="Play Melodia Logo" style="max-width: 200px; height: auto;">
+        </div>
+        <div class="tagline">Des Playlists Uniques Comme Votre Son!</div>
+        <div class="description">
+            Join SoundScape and transform your musical journey. Create custom playlists, share with friends, and explore a world of music tailored just for you.
+        </div>
+        <div class="form-container">
+            <form id="login-form">
+                <input type="email" placeholder="Email Address" required>
+                <input type="password" placeholder="Password" required>
+                <button type="submit">Log In</button>
+                <div class="form-links">
+                    <a href="#">Forgot Password?</a>
+                    <a href="#" id="show-register-form">Sign Up</a>
+                </div>
+            </form>
+            <form id="register-form" style="display: none;">
+                <input type="email" placeholder="Email Address" required>
+                <input type="password" placeholder="Password" required>
+                <button type="submit">Sign Up</button>
+                <div class="form-links">
+                    <a href="#" id="show-login-form">Already have an account? Log In</a>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script>
+        document.getElementById('show-register-form').addEventListener('click', function() {
+            document.getElementById('login-form').style.display = 'none';
+            document.getElementById('register-form').style.display = 'block';
+        });
+        document.getElementById('show-login-form').addEventListener('click', function() {
+            document.getElementById('register-form').style.display = 'none';
+            document.getElementById('login-form').style.display = 'block';
+        });
+    </script>
+</body>
+</html>
