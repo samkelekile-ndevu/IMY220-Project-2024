@@ -24,4 +24,4 @@ docker image build -t u21593681-imy220-image:latest
 docker login
 
 #push image
-docker push kunalmac25/react-example-image
+docker push u21593681/u21593681-imy220-image
