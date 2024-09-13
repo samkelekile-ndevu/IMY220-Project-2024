@@ -18,10 +18,13 @@
 
 
 #Build Image
-docker image build -t u21593681-imy220-image:latest
+docker image build -t imy220-projectd1-image:latest
 
 #Login
 docker login
 
 #push image
-docker push u21593681/u21593681-imy220-image
+docker push u21593681/imy220-projectd1-image
+
+#run
+docker run -dp 8000:3000 --name imy220-projectd1-container imy220-projectd1:latest
