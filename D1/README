@@ -23,8 +23,14 @@ docker image build -t imy220-projectd1-image:latest
 #Login
 docker login
 
-#push image
+#Push image
 docker push u21593681/imy220-projectd1-image
 
-#run
+#Run
 docker run -dp 8000:3000 --name imy220-projectd1-container imy220-projectd1:latest
+
+#Show images
+docker ps
+
+#Run on browser
+http://localhost:8000
