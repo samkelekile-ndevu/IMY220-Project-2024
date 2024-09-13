@@ -1,25 +1,74 @@
 import React from 'react';
-import { User } from '../components/User';
+import { ProfilePreview } from '../components/ProfilePreview';
 import { Header } from '../components/Header';
 
-// Array of users data
+// Temporary array of users data
 const usersArr = [
-  
+  {
+    id: 1,
+    username: 'user01',
+    imageUrl: 'https://via.placeholder.com/150',
+  },
+  {
+    id: 2,
+    username: 'user02',
+    imageUrl: 'https://via.placeholder.com/150',
+  },
+  {
+    id: 3,
+    username: 'user03',
+    imageUrl: 'https://via.placeholder.com/150',
+  },
+  {
+    id: 4,
+    username: 'user04',
+    imageUrl: 'https://via.placeholder.com/150',
+  },
+  {
+    id: 5,
+    username: 'user05',
+    imageUrl: 'https://via.placeholder.com/150',
+  },
+  {
+    id: 6,
+    username: 'user06',
+    imageUrl: 'https://via.placeholder.com/150',
+  },
+  {
+    id: 7,
+    username: 'user07',
+    imageUrl: 'https://via.placeholder.com/150',
+  },
+  {
+    id: 8,
+    username: 'user08',
+    imageUrl: 'https://via.placeholder.com/150',
+  },
 ];
 
 class Users extends React.Component {
-    constructor(props) {
-        super(props);
-      }
+  onViewProfile = (userId) => {
+    // Redirect to profile page for the clicked user
+    this.props.router.navigate(`/profile/${userId}`);
+  };
+
   render() {
     return (
       <div className="users-container">
-        <Header/>
-        <h1>Hello, Users Page!</h1>
-
+        <Header />
+        <h1>Users</h1>
+        <div className="users-list">
+          {usersArr.map((user) => (
+            <ProfilePreview
+              key={user.id}
+              profile={user}
+              onViewProfile={this.onViewProfile}
+            />
+          ))}
+        </div>
       </div>
     );
   }
 }
 
-export { Users };
+export default withRouter(Users);
