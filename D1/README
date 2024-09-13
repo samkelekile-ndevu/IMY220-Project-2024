@@ -1,12 +1,27 @@
-Install node lts and npm in linux cli:
+#Install node lts and npm in linux cli:
     curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
     sudo apt-get install nodejs -y
 
-Install project packaged:
+#Install project packaged:
     npm install
 
-Build Project:
+#Build Project:
     npm run build
 
-Run Project:
+#Run Project:
     npm run start
+
+
+##########################
+#Docker Commands
+#########################
+
+
+#Build Image
+docker image build -t u21593681-imy220-image:latest
+
+#Login
+docker login
+
+#push image
+docker push kunalmac25/react-example-image
