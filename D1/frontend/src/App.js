@@ -2,7 +2,7 @@ import React from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { Home } from './pages/Home';
 import Profile from './pages/Profile';
-import { Users } from './pages/Users';
+import Users from './pages/Users'; // Ensure this path is correct
 import { SplashPage } from './pages/SplashPage';
 import { Login } from './pages/Login';
 import { Signup } from './pages/Signup';
