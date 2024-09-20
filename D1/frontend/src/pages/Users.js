@@ -1,6 +1,7 @@
 import React from 'react';
 import { ProfilePreview } from '../components/ProfilePreview';
 import { Header } from '../components/Header';
+import { Footer } from '../components/Footer';
 
 // Temporary array of users data
 const usersArr = [
@@ -54,21 +55,24 @@ class Users extends React.Component {
 
   render() {
     return (
-      <div className="users-container">
+      <React.Fragment>
         <Header />
-        <h1>Users</h1>
-        <div className="users-list">
-          {usersArr.map((user) => (
-            <ProfilePreview
-              key={user.id}
-              profile={user}
-              onViewProfile={this.onViewProfile}
-            />
-          ))}
+        <div className="users-container">
+          <h1>Users</h1>
+          <div className="users-list">
+            {usersArr.map((user) => (
+              <ProfilePreview
+                key={user.id}
+                profile={user}
+                onViewProfile={this.onViewProfile}
+              />
+            ))}
+          </div>
         </div>
-      </div>
+        <Footer />
+      </React.Fragment>
     );
   }
 }
 
-export default withRouter(Users);
+export { Users };

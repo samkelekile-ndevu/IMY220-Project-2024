@@ -1,5 +1,4 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';  // Import withRouter
 
 class Playlist extends React.Component {
   render() {
@@ -20,5 +19,4 @@ class Playlist extends React.Component {
   }
 }
 
-// Wrap the Playlist component with withRouter to gain access to route params
-export default withRouter(Playlist);
+export {Playlist};

@@ -1,5 +1,6 @@
 import React from 'react';
-import { withRouter } from '../withRouter'; // to access route params
+import { Header } from '../components/Header';
+import { Footer } from '../components/Footer';
 
 class Profile extends React.Component {
   constructor(props) {
@@ -31,8 +32,8 @@ class Profile extends React.Component {
   }
 
   componentDidMount() {
-    const { id } = this.props.router.params; // Access dynamic route `id`
-    console.log(`Fetched profile data for user ID: ${id}`);
+    // const { id } = this.props.router.params; // Access dynamic route `id`
+    // console.log(`Fetched profile data for user ID: ${id}`);
 
     // Placeholder: In a real app, you would fetch user data based on the `id`
     // Example: fetch(`/api/users/${id}`).then(response => this.setState({ user: response.data }))
@@ -42,57 +43,61 @@ class Profile extends React.Component {
     const { user } = this.state;
 
     return (
-      <div className="profile-page">
-        <header>
-          <h1>{user.name}</h1>
-          <p>Username: {user.username}</p>
-          <p>Pronouns: {user.pronouns}</p>
-          <p>Bio: {user.bio}</p>
-          <div className="social-links">
-            <a href={user.socialLinks.twitter}>Twitter</a>
-            <a href={user.socialLinks.instagram}>Instagram</a>
-          </div>
-          <button>Edit Profile</button>
-        </header>
+      <React.Fragment>
+        <Header />
+        <div className="profile-page">
+          <header>
+            <h1>{user.name}</h1>
+            <p>Username: {user.username}</p>
+            <p>Pronouns: {user.pronouns}</p>
+            <p>Bio: {user.bio}</p>
+            <div className="social-links">
+              <a href={user.socialLinks.twitter}>Twitter</a>
+              <a href={user.socialLinks.instagram}>Instagram</a>
+            </div>
+            <button>Edit Profile</button>
+          </header>
 
-        <section className="friends-section">
-          <h2>My Friends</h2>
-          <ul>
-            {user.friends.map((friend, index) => (
-              <li key={index}>{friend}</li>
-            ))}
-          </ul>
-        </section>
+          <section className="friends-section">
+            <h2>My Friends</h2>
+            <ul>
+              {user.friends.map((friend, index) => (
+                <li key={index}>{friend}</li>
+              ))}
+            </ul>
+          </section>
 
-        <section className="playlists-section">
-          <h2>My Playlists</h2>
-          <button>Create Playlist</button>
-          <div className="playlists">
-            {user.playlists.map((playlist) => (
-              <div key={playlist.id} className="playlist">
-                <img src={playlist.imageUrl || 'https://via.placeholder.com/150'} alt={playlist.name} />
-                <h3>{playlist.name}</h3>
-                <p>{playlist.description}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <section className="playlists-section">
+            <h2>My Playlists</h2>
+            <button>Create Playlist</button>
+            <div className="playlists">
+              {user.playlists.map((playlist) => (
+                <div key={playlist.id} className="playlist">
+                  <img src={playlist.imageUrl || 'https://via.placeholder.com/150'} alt={playlist.name} />
+                  <h3>{playlist.name}</h3>
+                  <p>{playlist.description}</p>
+                </div>
+              ))}
+            </div>
+          </section>
 
-        <section className="saved-playlists-section">
-          <h2>Saved Playlists</h2>
-          <div className="playlists">
-            {user.savedPlaylists.map((playlist) => (
-              <div key={playlist.id} className="playlist">
-                <img src={playlist.imageUrl || 'https://via.placeholder.com/150'} alt={playlist.name} />
-                <h3>{playlist.name}</h3>
-                <p>Created by: {playlist.createdBy}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-      </div>
+          <section className="saved-playlists-section">
+            <h2>Saved Playlists</h2>
+            <div className="playlists">
+              {user.savedPlaylists.map((playlist) => (
+                <div key={playlist.id} className="playlist">
+                  <img src={playlist.imageUrl || 'https://via.placeholder.com/150'} alt={playlist.name} />
+                  <h3>{playlist.name}</h3>
+                  <p>Created by: {playlist.createdBy}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+        </div>
+        <Footer />
+      </React.Fragment>
     );
   }
 }
 
-export default withRouter(Profile);
+export { Profile };

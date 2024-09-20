@@ -1,5 +1,6 @@
 import React from 'react';
 import { Header } from '../components/Header';
+import { Footer } from '../components/Footer';
 import { Song } from '../components/Song';
 import { PlaylistPreview } from '../components/PlaylistPreview';
 import { SearchInput } from '../components/SearchInput';
@@ -21,6 +22,17 @@ class Home extends React.Component {
         { id: 2, name: 'Playlist 2', description: 'Description of Playlist 2', creator: 'User 2', imageUrl: 'https://th.bing.com/th/id' },
         { id: 3, name: 'Playlist 3', description: 'Description of Playlist 3', creator: 'User 3', imageUrl: 'https://th.bing.com/th/id' },
         // ... rest of the playlists
+        {
+          comments: [
+            { id: 1, text: "", username: "", createdAt: "" },
+            { id: 2, text: "", username: "", createdAt: "" },
+            { id: 3, text: "", username: "", createdAt: "" },
+            { id: 4, text: "", username: "", createdAt: "" },
+            { id: 5, text: "", username: "", createdAt: "" },
+            { id: 6, text: "", username: "", createdAt: "" },
+            // ... rest of the comments
+          ]
+        }
       ],
       searchResults: {
         songs: [],
@@ -93,36 +105,39 @@ class Home extends React.Component {
     const displayPlaylists = searchResults.playlists.length > 0 ? searchResults.playlists : playlists;
 
     return (
-      <div className="home-container">
+      <React.Fragment>
         <Header />
-        <SearchInput onSearch={this.handleSearch} />
-        <div className="action-buttons">
-          <button className="add-song-button" onClick={this.toggleAddSongForm}>Add Song</button>
-          <button className="create-playlist-button" onClick={this.toggleCreatePlaylistForm}>Create Playlist</button>
+        <div className="home-container">
+          <SearchInput onSearch={this.handleSearch} />
+          <div className="action-buttons">
+            <button className="add-song-button" onClick={this.toggleAddSongForm}>Add Song</button>
+            <button className="create-playlist-button" onClick={this.toggleCreatePlaylistForm}>Create Playlist</button>
+          </div>
+          {showAddSongForm && <AddSong onAddSong={this.handleAddSong} />}
+          {showCreatePlaylistForm && <CreatePlaylist onCreatePlaylist={this.handleCreatePlaylist} />}
+          <section className="song-feed">
+            <h2 className="section-title">Popular Songs This Week</h2>
+            <ul className="song-list">
+              {displaySongs.map((song) => (
+                <li key={song.id} className="song-item">
+                  <Song song={song} />
+                </li>
+              ))}
+            </ul>
+          </section>
+          <section className="playlist-feed">
+            <h2 className="section-title">Playlist Feed</h2>
+            <ul className="playlist-list">
+              {displayPlaylists.map((playlist) => (
+                <li key={playlist.id} className="playlist-item">
+                  <PlaylistPreview playlist={playlist} />
+                </li>
+              ))}
+            </ul>
+          </section>
         </div>
-        {showAddSongForm && <AddSong onAddSong={this.handleAddSong} />}
-        {showCreatePlaylistForm && <CreatePlaylist onCreatePlaylist={this.handleCreatePlaylist} />}
-        <section className="song-feed">
-          <h2 className="section-title">Popular Songs This Week</h2>
-          <ul className="song-list">
-            {displaySongs.map((song) => (
-              <li key={song.id} className="song-item">
-                <Song song={song} />
-              </li>
-            ))}
-          </ul>
-        </section>
-        <section className="playlist-feed">
-          <h2 className="section-title">Playlist Feed</h2>
-          <ul className="playlist-list">
-            {displayPlaylists.map((playlist) => (
-              <li key={playlist.id} className="playlist-item">
-                <PlaylistPreview playlist={playlist} />
-              </li>
-            ))}
-          </ul>
-        </section>
-      </div>
+        <Footer />
+      </React.Fragment>
     );
   }
 }

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+
 class Header extends React.Component {
   render() {
     const userId = 1; // You can hardcode the default user id here or pass it as a prop
@@ -27,9 +28,14 @@ class Header extends React.Component {
           </li>
           <li>
             {/* Link to profile with dynamic user ID */}
-            <Link to={`/profile/${userId}`}>
+            {/* <Link to={`/profile/${userId}`}>
+              <i className="fa fa-user"></i> Profile
+            </Link> */}
+
+            <Link to={`/profile`}>
               <i className="fa fa-user"></i> Profile
             </Link>
+
           </li>
         </ul>
       </nav>
