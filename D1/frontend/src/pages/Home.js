@@ -22,17 +22,6 @@ class Home extends React.Component {
         { id: 2, name: 'Playlist 2', description: 'Description of Playlist 2', creator: 'User 2', imageUrl: 'https://th.bing.com/th/id' },
         { id: 3, name: 'Playlist 3', description: 'Description of Playlist 3', creator: 'User 3', imageUrl: 'https://th.bing.com/th/id' },
         // ... rest of the playlists
-        {
-          comments: [
-            { id: 1, text: "", username: "", createdAt: "" },
-            { id: 2, text: "", username: "", createdAt: "" },
-            { id: 3, text: "", username: "", createdAt: "" },
-            { id: 4, text: "", username: "", createdAt: "" },
-            { id: 5, text: "", username: "", createdAt: "" },
-            { id: 6, text: "", username: "", createdAt: "" },
-            // ... rest of the comments
-          ]
-        }
       ],
       searchResults: {
         songs: [],
