@@ -1,0 +1,55 @@
+#Install node lts and npm in linux cli:
+    curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
+    sudo apt-get install nodejs -y
+
+#Install project packaged:
+    npm install
+
+#Run API Server:
+    npm run start
+
+#Build Project:
+    npm run build
+
+#Babel watch:
+    npm run watch
+
+#Run Project:
+    npm run start
+
+
+##########################
+#Docker Commands
+#########################
+
+#Login
+sudo docker login
+
+#tag the image to DockerHub first
+sudo docker tag imy220-project-image:latest u21593681/imy220-project-image:latest
+
+
+#Push the Image to Docker Hub
+sudo docker push u21593681/imy220-project-image:latest
+
+#Build Image
+sudo docker build -t imy220-project-image:latest .
+
+#Run the Container Make sure to map the correct ports. 
+#Since the server runs on localhost:3000, map it to 8000 and the api on 5000 on the host:
+sudo docker run -p 8000:3000 -p 5000:5000 imy220-project-image:latest
+
+
+#Run on browser
+http://localhost:8000
+
+#Show Running Containers To ensure your container is running:
+sudo docker ps
+
+#Close a running container:  docker stop <CONTAINER_ID>:
+sudo docker stop b399ce5e4298
+
+#Close all running containers
+sudo docker ps -q | xargs -r sudo docker stop
+
+

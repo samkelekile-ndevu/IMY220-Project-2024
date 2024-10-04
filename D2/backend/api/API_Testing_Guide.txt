@@ -1,0 +1,124 @@
+  Testing Instructions for Express API
+ 
+  Open Postman:
+  Launch the Postman application.
+ 
+  Set Up the Base URL:
+  Use http://localhost:5000 as the base URL for your requests.
+ 
+  #1 Testing User Signup:
+  - Method: POST
+  - URL: http://localhost:5000/signup
+  - Body: Select raw and choose JSON from the dropdown. Use the following example:
+  {
+    "username": "testuser",
+    "email": "testuser@example.com",
+    "password": "yourpassword"
+  }
+  - Click Send. You should receive a token in the response.
+ 
+  #2 Testing User Login:
+  - Method: POST
+  - URL: http://localhost:5000/login
+  - Body: Use the following example:
+  {
+    "email": "testuser@example.com",
+    "password": "yourpassword"
+  }
+  - Click Send. You should receive a token in the response.
+ 
+  #3 Testing Get Current User:
+  - Method: GET
+  - URL: http://localhost:5000/users/me
+  - Authorization: Go to the Authorization tab and select Bearer Token. 
+    Paste the token you received from the login response.
+  - Click Send. You should see your user details.
+ 
+  #4 Testing Update User Profile:
+  - Method: PUT
+  - URL: http://localhost:5000/users/me
+  - Authorization: Use the same token as before.
+  - Body: Use the following example to update the username:
+  {
+    "username": "updateduser"
+  }
+  - Click Send. You should see the updated user details.
+ 
+  #5 Testing Playlist Creation:
+  - Method: POST
+  - URL: http://localhost:5000/playlists
+  - Authorization: Use the token.
+  - Body: Use the following example:
+  {
+    "name": "My Playlist",
+    "description": "A cool playlist",
+    "imageUrl": "http://example.com/image.jpg"
+  }
+  - Click Send. You should see the created playlist.
+ 
+  #6 Testing Get All Playlists:
+  - Method: GET
+  - URL: http://localhost:5000/playlists
+  - Click Send. You should see a list of playlists.
+ 
+  #7 Testing Song Creation:
+  - Method: POST
+  - URL: http://localhost:5000/songs
+  - Body: Use the following example:
+  {
+    "title": "Song Title",
+    "artist": "Artist Name",
+    "album": "Album Name",
+    "duration": 210
+  }
+  - Click Send. You should see the created song.
+ 
+  #8 Testing Comment on a Song:
+  - Method: POST
+  - URL: http://localhost:5000/songs/:id/comments (replace :id with the song ID)
+  - Authorization: Use the token.
+  - Body: Use the following example:
+  {
+    "text": "Great song!"
+  }
+  - Click Send. You should see the created comment.
+ 
+  #9 Testing Delete a Comment:
+  - Method: DELETE
+  - URL: http://localhost:5000/songs/:songId/comments/:commentId (replace :songId and :commentId with the respective IDs)
+  - Authorization: Use the token.
+  - Click Send. You should receive a success message.
+ 
+  #10 Testing Remove a Song from Playlist:
+  - Method: DELETE
+  - URL: http://localhost:5000/playlists/:playlistId/songs/:songId (replace :playlistId and :songId with the respective IDs)
+  - Authorization: Use the token.
+  - Click Send. You should receive a success message.
+ 
+  #11 Testing Delete a Playlist:
+  - Method: DELETE
+  - URL: http://localhost:5000/playlists/:playlistId (replace :playlistId with the playlist ID)
+  - Authorization: Use the token.
+  - Click Send. You should receive a success message.
+ 
+  #12 Testing Send a Friend Request:
+  - Method: POST
+  - URL: http://localhost:5000/users/me/friends/:friendId (replace :friendId with the friend's user ID)
+  - Authorization: Use the token.
+  - Click Send. You should see a success message.
+ 
+  #13 Testing Accept a Friend Request:
+  - Method: POST
+  - URL: http://localhost:5000/users/me/friends/:friendId/accept (replace :friendId with the friend's user ID)
+  - Authorization: Use the token.
+  - Click Send. You should see a success message.
+ 
+  #14 Testing Remove a Friend:
+  - Method: DELETE
+  - URL: http://localhost:5000/users/me/friends/:friendId (replace :friendId with the friend's user ID)
+  - Authorization: Use the token.
+  - Click Send. You should see a success message.
+ 
+  #################################################################################
+  All tests should return appropriate status codes and messages.
+  ##################################################################################
