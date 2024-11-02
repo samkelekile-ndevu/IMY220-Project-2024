@@ -1,0 +1,105 @@
+Open Postman: Launch the Postman application.
+
+Set Up the Base URL:
+
+Use http://localhost:5000 as the base URL for your requests.
+
+#Mock data: songs: [
+        { id: 1, title: 'Save Your Tears', 
+          artist: 'The Weeknd', 
+          imageUrl: 'https://th.bing.com/th/id/OIP.McrFTtqd5JLrkWY4WtiDlgHaHa?w=176&h=180&c=7&r=0&o=5&pid=1.7'
+        }
+        ]
+
+
+#1 Testing User Signup:
+
+Method: POST
+URL: http://localhost:5000/signup
+Body: Select raw and choose JSON from the dropdown. Use the following example
+{
+  "username": "testuser",
+  "email": "testuser@example.com",
+  "password": "yourpassword"
+}
+Click Send. You should receive a token in the response.
+
+#2 Testing User Login:
+
+Method: POST
+URL: http://localhost:5000/login
+Body: Use the following example
+{
+  "email": "testuser@example.com",
+  "password": "yourpassword"
+}
+Click Send. You should receive a token in the response.
+
+#3 Testing Get Current User:
+
+Method: GET
+URL: http://localhost:5000/users/me
+Authorization: Go to the Authorization tab and select Bearer Token. Paste the token you received from the login response.
+Click Send. You should see your user details.
+
+#4 Testing Update User Profile:
+
+Method: PUT
+URL: http://localhost:5000/users/me
+Authorization: Use the same token as before.
+Body: Use the following example to update the username:
+{
+  "username": "updateduser"
+}
+Click Send. You should see the updated user details
+
+#5 Testing Playlist Creation:
+
+Method: POST
+URL: http://localhost:5000/playlists
+Authorization: Use the token.
+Body: Use the following example:
+{
+  "name": "My Playlist",
+  "description": "A cool playlist",
+  "imageUrl": "http://example.com/image.jpg"
+}
+Click Send. You should see the created playlist.
+
+#6 Testing Get All Playlists:
+
+Method: GET
+URL: http://localhost:5000/playlists
+Click Send. You should see a list of playlists.
+
+#7 Testing Song Creation:
+
+Method: POST
+URL: http://localhost:5000/songs
+Body: Use the following example:
+{
+  "title": "Song Title",
+  "artist": "Artist Name",
+  "album": "Album Name",
+  "duration": 210
+}
+Click Send. You should see the created song.
+
+#8 Testing Comment on a Song:
+
+Method: POST
+URL: http://localhost:5000/songs/:id/comments (replace :id with the song ID)
+Authorization: Use the token.
+Body: Use the following example:
+{
+  "text": "Great song!"
+}
+Click Send. You should see the created comment.
+
+
+
+
+
+#################################################################################
+TO DO: Delete comment, remove a song, delete playlist, add friend, remove friend
+##################################################################################
