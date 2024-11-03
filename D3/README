@@ -6,16 +6,19 @@
     npm install
 
 #Run API Server:
-    npm run start
-
-#Build Project:
-    npm run build
+    npm run run_api
 
 #Babel watch:
     npm run watch
 
 #Run Project:
     npm run start
+
+#Check process using the port 3000
+    lsof -i :3000
+
+#Kill the process using the port 3000. replace <PID> with actual pid number
+    kill -9 <PID>
 
 
 ##########################

@@ -108,7 +108,6 @@ const authenticate = (req, res, next) => {
 // ======================== Authentication Routes ========================
 
 // User Registration (Signup)
-// User Registration (Signup)
 app.post('/signup', async (req, res) => {
   const { username, email, password } = req.body;
 
@@ -155,8 +154,9 @@ app.post('/login', async (req, res) => {
           return res.status(401).send({ message: 'Invalid credentials' });
       }
 
+      const username = user.username;
       const token = jwt.sign({ id: user._id }, JWT_SECRET);
-      res.send({ token });
+      res.send(JSON.stringify({ token, username }));
   } catch (err) {
       console.error("Login error:", err); // Log the error
       res.status(500).send({ message: 'Internal server error' });
@@ -315,18 +315,30 @@ app.get('/playlists/:id', async (req, res) => {
 // Add a Comment to a Playlist
 app.post('/playlists/:id/comments', authenticate, async (req, res) => {
   const { text } = req.body;
+
+  // Log the authenticated user ID
+  console.log("Authenticated User ID:", req.userId);
+
   const comment = new Comment({ text, author: req.userId, playlistId: req.params.id });
 
   try {
     await comment.save();
+
     const playlist = await Playlist.findById(req.params.id);
     playlist.comments.push(comment._id);
     await playlist.save();
-    res.status(201).send(comment);
+
+    // Populate the author field to include the username
+    const populatedComment = await Comment.findById(comment._id).populate('author', 'username');
+    
+    res.status(201).send(populatedComment);
   } catch (err) {
-    res.status(400).send(err);
+    console.error("Error adding comment:", err);
+    res.status(400).send({ message: 'Failed to add comment', error: err.message });
   }
 });
+
+
 
 // ======================== Song Routes ========================
 

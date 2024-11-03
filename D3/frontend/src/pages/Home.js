@@ -33,22 +33,25 @@ class Home extends React.Component {
       const response = await fetch('http://localhost:5000/songs');
       if (!response.ok) throw new Error('Failed to fetch songs');
       const data = await response.json();
+      console.log("Fetched songs:", data); // Log fetched songs
       this.setState({ songs: data });
     } catch (error) {
       console.error("Error fetching songs:", error);
     }
   };
-
+  
   fetchPlaylists = async () => {
     try {
       const response = await fetch('http://localhost:5000/playlists');
       if (!response.ok) throw new Error('Failed to fetch playlists');
       const data = await response.json();
+      console.log("Fetched playlists:", data); // Log fetched playlists
       this.setState({ playlists: data });
     } catch (error) {
       console.error("Error fetching playlists:", error);
     }
   };
+  
 
   handleSearch = (query, searchType) => {
     const { songs, playlists } = this.state;

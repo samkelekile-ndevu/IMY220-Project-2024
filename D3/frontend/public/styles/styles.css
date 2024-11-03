@@ -185,7 +185,7 @@
   align-items: center;
 }
 
-.login-container input[type="text"], .login-container input[type="password"] {
+.login-container input[type="text"], input[type="email"], .login-container input[type="password"] {
   width: 100%;
   height: 40px;
   margin-bottom: 20px;
@@ -488,6 +488,89 @@ button[type="submit"]:hover {
 .search-input button:hover {
   background: #0056b3;
 }
+
+/* PLAYLIST DETAIL STYLES */
+.playlist-detail {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.playlist-detail h2 {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.playlist-detail p {
+  font-size: 16px;
+  color: #666;
+  margin: 5px 0;
+}
+
+.playlist-detail img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin: 20px 0;
+}
+
+.playlist-detail h3 {
+  font-size: 20px;
+  color: #333;
+  margin-top: 30px;
+  border-bottom: 2px solid #007bff;
+  padding-bottom: 5px;
+}
+
+.playlist-detail ul {
+  list-style: none;
+  padding: 0;
+}
+
+.playlist-detail li {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px 0;
+  transition: background 0.2s, box-shadow 0.2s;
+}
+
+.playlist-detail li:hover {
+  background: #f0f0f0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.playlist-detail li p {
+  margin: 0;
+  color: #333;
+}
+
+.playlist-detail li p:last-child {
+  font-size: 12px;
+  color: #888;
+}
+
+/* Comments styling */
+.playlist-detail .comment {
+  margin-top: 20px;
+}
+
+.playlist-detail .comment p {
+  margin: 5px 0;
+}
+
+.playlist-detail .comment p:last-child {
+  font-size: 12px;
+  color: #888;
+}
+
 
 
 /* PROFILE PAGE */

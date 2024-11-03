@@ -15,8 +15,7 @@ var app = (0, _express["default"])();
 app.use(_express["default"]["static"]("frontend/public"));
 
 // Define the port to listen on
-// const PORT = 3000;
-var PORT = 3001;
+var PORT = 3000;
 app.listen(PORT, function () {
   console.log("Server is listening on http://localhost:".concat(PORT));
 });

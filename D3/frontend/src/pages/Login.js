@@ -32,7 +32,7 @@ const Login = () => {
       if (response.ok) {
         // Save the JWT token (if the API responds with one)
         localStorage.setItem('token', data.token);
-        localStorage.setItem('uName', email);   //save email
+        localStorage.setItem('uName', data.username);   //save username
         // Redirect to the home page
         navigate('/home');
       } else {

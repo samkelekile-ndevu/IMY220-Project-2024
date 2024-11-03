@@ -40,7 +40,7 @@ const router = createBrowserRouter([
   
   {
     path: '/playlist/:id', // Add a new route for a specific playlist
-    element: <Playlist />,
+    element: <Playlist/>,
   },
 ]);
 

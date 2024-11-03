@@ -40,7 +40,7 @@ class CreatePlaylist extends React.Component {
       creator: localStorage.getItem("uName"),   //get the username
       name: this.state.playlistName,
       description: this.state.playlistDescription,
-      coverImage: this.state.playlistCoverImage.name,
+      coverImage: "../assets/images/uploads/" + this.state.playlistCoverImage.name,
     };
   
     try {

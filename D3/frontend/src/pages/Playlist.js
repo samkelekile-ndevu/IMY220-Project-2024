@@ -1,65 +1,98 @@
-import React, { useState } from 'react';
-import { useParams } from 'react-router-dom'; // Import useParams
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
+import { Comment } from '../components/Comment';
+import { AddComment } from '../components/AddComment';
 
 const Playlist = () => {
-  const { id } = useParams(); // Access the id from the URL
-  const [comments, setComments] = useState([]); // State for comments
-  const [commentInput, setCommentInput] = useState(''); // State for comment input
+  const { id } = useParams();
+  const [playlist, setPlaylist] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const handleCommentChange = (event) => {
-    setCommentInput(event.target.value);
-  };
-
-
-  const handleCommentSubmit = (event) => {
-    event.preventDefault();
-    const newComment = {
-      author: 'User', // Replace with actual user name
-      text: commentInput,
+  useEffect(() => {
+    const fetchPlaylist = async () => {
+      try {
+        const response = await fetch(`http://localhost:5000/playlists/${id}`);
+        if (!response.ok) throw new Error('Failed to fetch playlist');
+        const data = await response.json();
+        setPlaylist(data);
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
     };
-    setComments((prevComments) => [...prevComments, newComment]);
-    setCommentInput(''); // Clear input field
+
+    fetchPlaylist();
+  }, [id]);
+
+  const handleAddComment = async (text) => {
+    console.log("Adding comment:", text);
+
+    try {
+      const token = localStorage.getItem('token');
+      const response = await fetch(`http://localhost:5000/playlists/${id}/comments`, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ text }),
+      });
+
+      if (!response.ok) {
+        const errorDetails = await response.text();
+        throw new Error(`Failed to add comment: ${errorDetails}`);
+      }
+
+      const addedComment = await response.json();
+      setPlaylist((prev) => ({
+        ...prev,
+        comments: [...prev.comments, addedComment],
+      }));
+    } catch (error) {
+      console.error('Error adding comment:', error);
+    }
   };
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
+
+  console.log(playlist); // Debugging line to check playlist structure
+
+  
 
   return (
     <React.Fragment>
       <Header />
-      <div className="playlist-page">
-        <h1>Playlist Page</h1>
-        <p>Displaying playlist for ID: {id}</p>
-        <div className="playlist-details">
-          <h2>Playlist Name</h2>
-          <p>Description: This is a great playlist.</p>
-          <p>Created by: User XYZ</p>
-        </div>
+      <h1>Playlist Page</h1>
+      <div className="playlist-detail">
+        <h2>{playlist.name}</h2>
+        <p>Created by: {playlist.creator.username}</p>
+        <p>Description: {playlist.description}</p>
+        {playlist.coverImage && <img src={playlist.coverImage} alt={`${playlist.name} cover`} />}
+        <p>Date Created: {new Date(playlist.dateCreated).toLocaleDateString()}</p>
 
-        {/* Comments section */}
-        <div className="comments-section">
-          <h3>Comments</h3>
-          <ul className="comments-list">
-            {comments.map((comment, index) => (
-              <li key={index}>
-                <div className="comment-author">{comment.author}</div>
-                <div className="comment-text">{comment.text}</div>
-              </li>
-            ))}
-          </ul>
+        <h3>Songs</h3>
+        <ul className="song-list">
+          {playlist.songs.map((song) => (
+            <li key={song._id}>
+              {song.title} by {song.artist}
+            </li>
+          ))}
+        </ul>
 
-          {/* Comment form */}
-          <form onSubmit={handleCommentSubmit}>
-            <input
-              type="text"
-              value={commentInput}
-              onChange={handleCommentChange}
-              placeholder="Add a comment..."
-            />
-            <button type="submit">Submit</button>
-          </form>
-        </div>
+        <h3>Comments</h3>
+        <ul className="comment-list">
+          {playlist.comments.map((comment) => (
+            <Comment key={comment._id} comment={comment} />
+          ))}
+        </ul>
+
+        <AddComment onAddComment={handleAddComment} />
       </div>
-
       <Footer />
     </React.Fragment>
   );
