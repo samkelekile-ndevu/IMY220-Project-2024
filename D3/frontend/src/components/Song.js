@@ -6,14 +6,16 @@ class Song extends React.Component {
   }
 
   render() {
-    const { imageUrl, artist, title } = this.props.song;
-
+    const { song } = this.props;
+    console.log("song: " + song);//debug
+    
     return (
       <div className="song-item">
-        <img src={imageUrl} alt={title} />
+        <img src="https://cdn.creazilla.com/icons/3431524/music-icon-md.png" alt={song.title} />
         <div className="song-details">
-          <h4>{title}</h4>
-          <p>{artist}</p>
+          <h4>{song.title}</h4>
+          <p>{song.artist}</p>
+          <button>Add to playlist</button>
         </div>
       </div>
     );

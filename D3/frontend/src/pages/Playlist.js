@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
 import { Comment } from '../components/Comment';
+import { Song } from '../components/Song';
 import { AddComment } from '../components/AddComment';
 
 const Playlist = () => {
@@ -28,6 +29,18 @@ const Playlist = () => {
     fetchPlaylist();
   }, [id]);
 
+  //generate random key value to use when rendering my components
+  const generateRandomKey = (length = 24) =>{
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let result = '';
+  for (let i = 0; i < length; i++) {
+    const randomIndex = Math.floor(Math.random() * characters.length);
+    result += characters[randomIndex];
+  }
+  return result;
+}
+
+
   const handleAddComment = async (text) => {
     console.log("Adding comment:", text);
 
@@ -50,18 +63,16 @@ const Playlist = () => {
       const addedComment = await response.json();
       setPlaylist((prev) => ({
         ...prev,
-        comments: [...prev.comments, addedComment],
+        comments: [...prev.comments, addedComment._id],
       }));
     } catch (error) {
       console.error('Error adding comment:', error);
     }
+    
   };
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
-
-  console.log(playlist); // Debugging line to check playlist structure
-
   
 
   return (
@@ -78,16 +89,14 @@ const Playlist = () => {
         <h3>Songs</h3>
         <ul className="song-list">
           {playlist.songs.map((song) => (
-            <li key={song._id}>
-              {song.title} by {song.artist}
-            </li>
+            <Song key={generateRandomKey()} song={song}/>
           ))}
         </ul>
 
         <h3>Comments</h3>
         <ul className="comment-list">
           {playlist.comments.map((comment) => (
-            <Comment key={comment._id} comment={comment} />
+            <Comment key={generateRandomKey()} comment_id={comment} />
           ))}
         </ul>
 

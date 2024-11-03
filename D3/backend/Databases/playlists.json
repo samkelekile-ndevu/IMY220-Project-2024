@@ -1,0 +1,41 @@
+[{
+  "_id": {
+    "$oid": "6727a5e2fac94de7222f5f8c"
+  },
+  "name": "Most memorable records of 2020 ",
+  "creator": "6727a526fac94de7222f5f87",
+  "description": "Explore the most memorable records released in 2020",
+  "coverImage": "../assets/images/uploads/The_Weeknd_-_After_Hours.png",
+  "songs": [],
+  "comments": [
+    {
+      "$oid": "6727a600fac94de7222f5f91"
+    },
+    {
+      "$oid": "6727d984b843b677c547abf1"
+    }
+  ],
+  "dateCreated": {
+    "$date": "2024-11-03T16:33:38.175Z"
+  },
+  "__v": 2
+},
+{
+  "_id": {
+    "$oid": "6727ad9afac94de7222f5ff1"
+  },
+  "name": "Golden Era of Hip Hop",
+  "creator": "6727aa21fac94de7222f5fe5",
+  "description": "Relive the golden era with the 90s classics!",
+  "coverImage": "../assets/images/uploads/nwa_1990.jpg",
+  "songs": [],
+  "comments": [
+    {
+      "$oid": "6727d96db843b677c547abe0"
+    }
+  ],
+  "dateCreated": {
+    "$date": "2024-11-03T17:06:34.931Z"
+  },
+  "__v": 1
+}]

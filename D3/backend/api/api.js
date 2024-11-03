@@ -1,6 +1,5 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const cors = require('cors');
 
@@ -31,7 +30,7 @@ const userSchema = new mongoose.Schema({
   gender: String,
   bio: String,
   profileImage: String,
-  passwordHash: String,
+  password: String,
   friends: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
   friendRequests: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
   playlists: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Playlist' }],
@@ -123,14 +122,11 @@ app.post('/signup', async (req, res) => {
       return res.status(409).send({ message: 'Email already in use.' });
     }
 
-    // Hash the password
-    const hashedPassword = await bcrypt.hash(password, 10);
-    
     // Create a new user
     const user = new User({
       username,
       email,
-      passwordHash: hashedPassword,
+      password: password,
       dateCreated: new Date(),
       dateUpdated: new Date(),
     });
@@ -150,41 +146,61 @@ app.post('/login', async (req, res) => {
       const { email, password } = req.body;
 
       const user = await User.findOne({ email });
-      if (!user || !(await bcrypt.compare(password, user.passwordHash))) {
+      if (!user || password !== user.password) {
           return res.status(401).send({ message: 'Invalid credentials' });
       }
 
       const username = user.username;
+      const userId = user._id;
       const token = jwt.sign({ id: user._id }, JWT_SECRET);
-      res.send(JSON.stringify({ token, username }));
+      res.send(JSON.stringify({ token, username, userId }));
   } catch (err) {
       console.error("Login error:", err); // Log the error
       res.status(500).send({ message: 'Internal server error' });
   }
 });
 
-
-// Get Current User Information
-app.get('/users/me', authenticate, async (req, res) => {
+// Endpoint to get a specific user by userId
+app.get('/users/:userId', async (req, res) => {
+  const { userId } = req.params;
+  // Fetch user by userId and respond
   try {
-    const user = await User.findById(req.userId).exec();
-    res.send(user);
-  } catch (err) {
-    res.status(500).send(err);
+      const user = await User.findById(userId); // Assuming Mongoose is used
+      if (!user) {
+          return res.status(404).send('User not found');
+      }
+      res.json(user);
+  } catch (error) {
+      res.status(500).send(error.message);
   }
 });
 
-// Update Current User Information
-app.put('/users/me', authenticate, async (req, res) => {
+// Endpoint to update a specific user by userId
+app.put('/users/:userId', async (req, res) => {
+  const { userId } = req.params;
+  const updates = req.body;
+  // Update user by userId and respond
   try {
-    const user = await User.findByIdAndUpdate(req.userId, req.body, { new: true }).exec();
-    res.send(user);
-  } catch (err) {
-    res.status(400).send(err);
+      const user = await User.findByIdAndUpdate(userId, updates, { new: true });
+      if (!user) {
+          return res.status(404).send('User not found');
+      }
+      res.json(user);
+  } catch (error) {
+      res.status(500).send(error.message);
   }
 });
 
 // ======================== User Search Route ========================
+
+app.get('/users', async (req, res) => {   //all users
+  try {
+    const users = await User.find().exec();
+    res.send(users);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
 
 // Search Users by Username or Email
 app.get('/users/search', authenticate, async (req, res) => {
@@ -200,7 +216,7 @@ app.get('/users/search', authenticate, async (req, res) => {
         { username: { $regex: query, $options: 'i' } },
         { email: { $regex: query, $options: 'i' } }
       ]
-    }).select('-passwordHash').exec();
+    }).select('-password').exec();
 
     res.send(users);
   } catch (err) {
@@ -210,55 +226,131 @@ app.get('/users/search', authenticate, async (req, res) => {
 
 // ======================== Friend Request Routes ========================
 
+// Get Friend Requests for the Authenticated User
+app.get('/users/me/requests', authenticate, async (req, res) => {
+  try {
+    // Find the user by their authenticated ID and populate friendRequests with basic details
+    const user = await User.findById(req.userId).populate('friendRequests', 'username email');
+    
+    if (!user) {
+      return res.status(404).send({ message: 'User not found' });
+    }
+    
+    res.send(user.friendRequests);
+  } catch (err) {
+    console.error("Error fetching friend requests:", err);
+    res.status(500).send({ message: 'Failed to retrieve friend requests', error: err.message });
+  }
+});
+
+
 // Send a Friend Request
-app.post('/users/me/friends/:friendId', authenticate, async (req, res) => {
+app.post('/users/:userId/friend-requests', authenticate, async (req, res) => {
   try {
     const user = await User.findById(req.userId);
-    const friend = await User.findById(req.params.friendId);
+    const friend = await User.findById(req.params.userId);
 
     if (!friend) {
       return res.status(404).send({ message: 'User not found' });
     }
 
+    // Check if a friend request has already been sent
     if (friend.friendRequests.includes(user._id)) {
       return res.status(400).send({ message: 'Friend request already sent' });
     }
 
+    // Check if they are already friends
+    if (user.friends.includes(friend._id)) {
+      return res.status(400).send({ message: 'Already friends' });
+    }
+
+    // Send friend request
     friend.friendRequests.push(user._id);
     await friend.save();
 
-    res.send({ message: 'Friend request sent' });
+    res.status(200).send({ message: 'Friend request sent' });
   } catch (err) {
-    res.status(500).send(err);
+    console.error("Error sending friend request:", err);
+    res.status(500).send({ message: 'Failed to send friend request', error: err.message });
   }
 });
 
+
 // Accept a Friend Request
-app.post('/users/me/friends/:friendId/accept', authenticate, async (req, res) => {
+app.put('/users/:friendId/accept-requests', authenticate, async (req, res) => {
   try {
     const user = await User.findById(req.userId);
     const friend = await User.findById(req.params.friendId);
 
     if (!friend) {
-      return res.status(404).send({ message: 'User not found' });
+      return res.status(404).send({ message: 'Friend user not found' });
     }
 
     if (!user.friendRequests.includes(friend._id)) {
       return res.status(400).send({ message: 'No friend request from this user' });
     }
 
+    // Check if they are already friends
+    if (user.friends.includes(friend._id)) {
+      return res.status(400).send({ message: 'Already friends with this user' });
+    }
+
+    // Add each other as friends
     user.friends.push(friend._id);
     friend.friends.push(user._id);
+
+    // Remove the friend request
     user.friendRequests = user.friendRequests.filter(id => !id.equals(friend._id));
 
     await user.save();
     await friend.save();
 
-    res.send({ message: 'Friend request accepted' });
+    res.send({
+      message: 'Friend request accepted',
+      user: {
+        id: user._id,
+        friends: user.friends,
+        friendRequests: user.friendRequests
+      },
+      friend: {
+        id: friend._id,
+        friends: friend.friends
+      }
+    });
   } catch (err) {
-    res.status(500).send(err);
+    res.status(500).send({ message: 'Server error, please try again', error: err });
   }
 });
+
+// Unfriend
+app.delete('/users/:userId/unfriend', authenticate, async (req, res) => {
+  const { userId } = req.params; // ID of the friend to unfriend
+  const currentUserId = req.userId; // Get current user's ID from the authenticated request
+
+  try {
+    // Find both the current user and the friend in the database
+    const currentUser = await User.findById(currentUserId);
+    const friend = await User.findById(userId);
+
+    if (!currentUser || !friend) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Remove each user from the other's friend list
+    currentUser.friends = currentUser.friends.filter(id => id.toString() !== userId);
+    friend.friends = friend.friends.filter(id => id.toString() !== currentUserId);
+
+    // Save the updated user documents
+    await currentUser.save();
+    await friend.save();
+
+    res.status(200).json({ message: 'Successfully unfriended' });
+  } catch (error) {
+    console.error("Error unfriending:", error);
+    res.status(500).json({ message: 'Error unfriending', error: error.message });
+  }
+});
+
 
 // ======================== Playlist Routes ========================
 
@@ -338,6 +430,19 @@ app.post('/playlists/:id/comments', authenticate, async (req, res) => {
   }
 });
 
+// Get a Comment by ID
+app.get('/comments/:commentId', async (req, res) => {
+  try {
+    const comment = await Comment.findById(req.params.commentId).populate('author', 'username').exec();
+    if (!comment) {
+      return res.status(404).send({ message: 'Comment not found' });
+    }
+    res.send(comment);
+  } catch (err) {
+    console.error("Error retrieving comment:", err);
+    res.status(500).send({ message: 'Failed to retrieve comment', error: err.message });
+  }
+});
 
 
 // ======================== Song Routes ========================

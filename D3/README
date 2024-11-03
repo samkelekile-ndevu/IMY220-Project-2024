@@ -56,4 +56,5 @@ sudo docker stop b399ce5e4298
 #Close all running containers
 sudo docker ps -q | xargs -r sudo docker stop
 
-
+#Save the image
+sudo docker save u21593681/imy220-project-image:latest | gzip > myimage_latest.tar.gz

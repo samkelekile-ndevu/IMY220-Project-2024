@@ -2,77 +2,59 @@ import React from 'react';
 import { ProfilePreview } from '../components/ProfilePreview';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
+import { useNavigate } from 'react-router-dom';
 
-// Temporary array of users data
-const usersArr = [
-  {
-    id: 1,
-    username: 'user01',
-    imageUrl: 'https://via.placeholder.com/150',
-  },
-  {
-    id: 2,
-    username: 'user02',
-    imageUrl: 'https://via.placeholder.com/150',
-  },
-  {
-    id: 3,
-    username: 'user03',
-    imageUrl: 'https://via.placeholder.com/150',
-  },
-  {
-    id: 4,
-    username: 'user04',
-    imageUrl: 'https://via.placeholder.com/150',
-  },
-  {
-    id: 5,
-    username: 'user05',
-    imageUrl: 'https://via.placeholder.com/150',
-  },
-  {
-    id: 6,
-    username: 'user06',
-    imageUrl: 'https://via.placeholder.com/150',
-  },
-  {
-    id: 7,
-    username: 'user07',
-    imageUrl: 'https://via.placeholder.com/150',
-  },
-  {
-    id: 8,
-    username: 'user08',
-    imageUrl: 'https://via.placeholder.com/150',
-  },
-];
+const Users = () => {
+  const [usersArr, setUsersArr] = React.useState([]);
+  const [loading, setLoading] = React.useState(true);
+  const [error, setError] = React.useState(null);
+  const navigate = useNavigate(); // Use the hook to get the navigate function
 
-class Users extends React.Component {
-  onViewProfile = (userId) => {
+  React.useEffect(() => {
+    fetchUsers();
+  }, []);
+
+  const onViewProfile = (userId) => {
     // Redirect to profile page for the clicked user
-    this.props.router.navigate(`/profile/${userId}`);
+    navigate(`/profile/${userId}`); // Use navigate from the hook
   };
 
-  render() {
-    return (
-      <React.Fragment>
-        <Header />
-        <div className="users-container">
-          <h1>Users</h1>
-          <div className="users-list">
-            {usersArr.map((user) => (
-              <ProfilePreview
-                key={user.id}
-                profile={user}
-                onViewProfile={this.onViewProfile}
-              />
-            ))}
-          </div>
+  // Fetch all users
+  const fetchUsers = async () => {
+    try {
+      const response = await fetch('http://localhost:5000/users');
+      if (!response.ok) {
+        throw new Error('Error fetching users');
+      }
+      const data = await response.json();
+      setUsersArr(data);
+      setLoading(false);
+    } catch (err) {
+      setError(err.message);
+      setLoading(false);
+    }
+  };
+
+  return (
+    <React.Fragment>
+      <Header />
+      <div className="users-container">
+        <h1>Users</h1>
+        {loading && <div>Loading...</div>}
+        {error && <div>Error: {error}</div>}
+        <div className="users-list">
+          {usersArr.map((user) => (
+            <ProfilePreview
+              key={user._id}
+              profile={user}
+              onViewProfile={onViewProfile}
+            />
+          ))}
         </div>
-        <Footer />
-      </React.Fragment>
-    );
-  }
-}
+      </div>
+      <Footer />
+    </React.Fragment>
+  );
+};
 
 export { Users };

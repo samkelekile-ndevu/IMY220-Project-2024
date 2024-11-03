@@ -3,9 +3,22 @@ import { Link, useParams } from 'react-router-dom';
 
 
 class Header extends React.Component {
+  constructor(props){
+    super(props);
+
+    //logout handler
+    this.handleLogout = this.handleLogout.bind(this);
+  }
+
+  handleLogout() {
+    localStorage.clear(); //clear localStorage
+    console.clear();  //clear console
+    alert('Logging you out...');
+  }
+
   render() {
-    // const userId = 1; // You can hardcode the default user id here or pass it as a prop
-    
+    const userId = localStorage.getItem("uId");
+
     return (
       <nav className="navContainer">
         <div className="logo-container">
@@ -28,14 +41,20 @@ class Header extends React.Component {
           </li>
           <li>
             {/* Link to profile with dynamic user ID */}
-            {/* <Link to={`/profile/${userId}`}>
-              <i className="fa fa-user"></i> Profile
-            </Link> */}
-
-            <Link to={`/profile`}>
+            <Link to={`/profile/${userId}`}>
               <i className="fa fa-user"></i> Profile
             </Link>
 
+            {/* <Link to={`/profile`}>
+              <i className="fa fa-user"></i> Profile
+            </Link> */}
+
+          </li>
+
+          <li onClick={this.handleLogout}>
+            <Link to="/login">
+              <i className="fa fa-sign-out" ></i>Logout
+            </Link>
           </li>
         </ul>
       </nav>

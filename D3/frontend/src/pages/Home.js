@@ -21,12 +21,18 @@ class Home extends React.Component {
       showAddSongForm: false,
       showCreatePlaylistForm: false,
     };
+    
   }
 
   componentDidMount() {
     this.fetchSongs();
     this.fetchPlaylists();
   }
+
+  // componentDidUpdate() {
+  //   this.fetchSongs();
+  //   this.fetchPlaylists();
+  // }
 
   fetchSongs = async () => {
     try {
@@ -112,8 +118,8 @@ class Home extends React.Component {
             <h2 className="section-title">Songs Feed</h2>
             <ul className="song-list">
               {displaySongs.map((song) => (
-                <li key={song._id} className="song-item">
-                  <Song song={song} />
+                <li key={song._id} >
+                  <Song song={song} className="song-item"/>
                 </li>
               ))}
             </ul>

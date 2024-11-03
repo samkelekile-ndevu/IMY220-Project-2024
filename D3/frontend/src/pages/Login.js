@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 const Login = () => {
   const [email, setEmail] = useState(''); // Changed to email since your API uses email for login
@@ -33,6 +33,8 @@ const Login = () => {
         // Save the JWT token (if the API responds with one)
         localStorage.setItem('token', data.token);
         localStorage.setItem('uName', data.username);   //save username
+        localStorage.setItem('uId', data.userId);   //save userId
+        
         // Redirect to the home page
         navigate('/home');
       } else {
@@ -67,6 +69,7 @@ const Login = () => {
         </button>
       </form>
       {errorMessage && <p className="error">{errorMessage}</p>}
+      <p>Have no account yet? <Link to="/signup">Create account</Link></p>
     </div>
   );
 };

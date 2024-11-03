@@ -1,0 +1,73 @@
+[{
+  "_id": {
+    "$oid": "6727a526fac94de7222f5f87"
+  },
+  "username": "sam01",
+  "email": "sam01@gmail.com",
+  "password": "1234",
+  "friends": [
+    {
+      "$oid": "6727aa21fac94de7222f5fe5"
+    }
+  ],
+  "friendRequests": [],
+  "playlists": [
+    {
+      "$oid": "6727a5e2fac94de7222f5f8c"
+    }
+  ],
+  "comments": [],
+  "dateCreated": {
+    "$date": "2024-11-03T16:30:30.325Z"
+  },
+  "dateUpdated": {
+    "$date": "2024-11-03T16:30:30.325Z"
+  },
+  "__v": 4
+},
+{
+  "_id": {
+    "$oid": "6727aa21fac94de7222f5fe5"
+  },
+  "username": "johnjohn",
+  "email": "johndoe@gmail.com",
+  "password": "1234",
+  "friends": [
+    {
+      "$oid": "6727a526fac94de7222f5f87"
+    }
+  ],
+  "friendRequests": [],
+  "playlists": [
+    {
+      "$oid": "6727ad9afac94de7222f5ff1"
+    }
+  ],
+  "comments": [],
+  "dateCreated": {
+    "$date": "2024-11-03T16:51:45.604Z"
+  },
+  "dateUpdated": {
+    "$date": "2024-11-03T16:51:45.604Z"
+  },
+  "__v": 4
+},
+{
+  "_id": {
+    "$oid": "6727e07eb843b677c547ac56"
+  },
+  "username": "janedoe",
+  "email": "janedoe@gmail.com",
+  "password": "1234",
+  "friends": [],
+  "friendRequests": [],
+  "playlists": [],
+  "comments": [],
+  "dateCreated": {
+    "$date": "2024-11-03T20:43:42.822Z"
+  },
+  "dateUpdated": {
+    "$date": "2024-11-03T20:43:42.822Z"
+  },
+  "__v": 0
+}]

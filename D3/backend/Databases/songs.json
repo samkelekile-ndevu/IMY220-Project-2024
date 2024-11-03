@@ -1,0 +1,33 @@
+[{
+  "_id": {
+    "$oid": "6727a661fac94de7222f5fa1"
+  },
+  "title": "Save Your Tears",
+  "artist": "The Weeknd",
+  "dateCreated": {
+    "$date": "2024-11-03T16:35:45.913Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6727a6c5fac94de7222f5fa3"
+  },
+  "title": "Stillmatic",
+  "artist": "Nas",
+  "dateCreated": {
+    "$date": "2024-11-03T16:37:25.279Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6727adb7fac94de7222f5ff4"
+  },
+  "title": "Song Cry",
+  "artist": "Jay Z",
+  "dateCreated": {
+    "$date": "2024-11-03T17:07:03.107Z"
+  },
+  "__v": 0
+}]

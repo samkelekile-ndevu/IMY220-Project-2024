@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const Signup = () => {
   const [username, setUsername] = useState('');
@@ -67,6 +68,7 @@ const Signup = () => {
         <button type="submit">Sign Up</button>
       </form>
       {errorMessage && <p className="error">{errorMessage}</p>}
+      <p>Have an account already? <Link to="/login">Login</Link></p>
     </div>
   );
 };
